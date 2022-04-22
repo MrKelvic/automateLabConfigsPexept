@@ -1,0 +1,63 @@
+{
+        "devices":[
+            {
+                "deviceName":"sw1",
+                "access":"telnet",
+                "ip":"127.0.0.1",
+                "port":"5016",
+                "type":"router",
+                "configs":[
+                    {
+                        "index":0,
+                        "params":[],
+                        "all":true
+                    },
+                    {
+                        "index":1,
+                        "all":false,
+                        "params":[
+                            {"index":0,"value":"sw1"},
+                            {"index":0,"value":"sw2"}
+                        ]
+                    }
+                ]
+            }
+        ],
+        "configs":[
+            {
+                "index":0,
+                "commands":[
+                    {
+                        "base":"enable",
+                        "expect":null,
+                        "read":false
+                    },
+                    {
+                        "base":"config terminal",
+                        "expect":null,
+                        "read":false
+                    }
+                ]
+            },
+            {
+                "index":1,
+                "commands":[
+                    {
+                        "base":"hostname ",
+                        "expect":null,
+                        "read":false
+                    }
+                ]
+            },
+            {
+                "index":2,
+                "commands":[
+                    {
+                        "base":"do show run",
+                        "expect":null,
+                        "read":true
+                    }
+                ]
+            }
+        ]
+}
