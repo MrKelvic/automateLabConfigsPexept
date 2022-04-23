@@ -1,0 +1,52 @@
+[
+    {
+        "index":0,
+        "commands":[
+            {
+                "base":"enable",
+                "expect":null,
+                "read":false
+            },
+            {
+                "base":"config terminal",
+                "expect":null,
+                "read":false
+            }
+        ]
+    },
+    {
+        "index":1,
+        "commands":[
+            {
+                "base":"hostname ",
+                "expect":null,
+                "read":false
+            }
+        ]
+    },
+    {
+        "index":2,
+        "commands":[
+            {
+                "base":"interface ",
+                "expect":null,
+                "read":false
+            },
+            {
+                "base":"ip address ",
+                "expect":null,
+                "read":false
+            },
+            {
+                "base":"no shutdown ",
+                "expect":null,
+                "read":false
+            },
+            {
+                "base":"exit",
+                "expect":null,
+                "read":false
+            }
+        ]
+    }
+]

@@ -1,63 +1,107 @@
-{
-        "devices":[
-            {
-                "deviceName":"sw1",
-                "access":"telnet",
-                "ip":"127.0.0.1",
-                "port":"5016",
-                "type":"router",
-                "configs":[
-                    {
-                        "index":0,
-                        "params":[],
-                        "all":true
-                    },
-                    {
-                        "index":1,
-                        "all":false,
-                        "params":[
-                            {"index":0,"value":"sw1"},
-                            {"index":0,"value":"sw2"}
-                        ]
-                    }
-                ]
-            }
-        ],
+[
+    {
+        "deviceName":"r1",
+        "access":"telnet",
+        "ip":"127.0.0.1",
+        "port":"5016",
+        "type":"router",
         "configs":[
             {
                 "index":0,
-                "commands":[
-                    {
-                        "base":"enable",
-                        "expect":null,
-                        "read":false
-                    },
-                    {
-                        "base":"config terminal",
-                        "expect":null,
-                        "read":false
-                    }
-                ]
+                "params":[],
+                "all":true
             },
             {
                 "index":1,
-                "commands":[
-                    {
-                        "base":"hostname ",
-                        "expect":null,
-                        "read":false
-                    }
+                "all":false,
+                "params":[
+                    {"index":0,"value":"r1"}
                 ]
             },
             {
                 "index":2,
-                "commands":[
-                    {
-                        "base":"do show run",
-                        "expect":null,
-                        "read":true
-                    }
+                "all":false,
+                "params":[
+                    {"index":0,"value":"gi0/0"},
+                    {"index":1,"value":"192.168.10.1 255.255.255.252"},
+                    {"index":2,"value":null},
+                    {"index":3,"value":null},
+                    {"index":0,"value":"gi0/1"},
+                    {"index":1,"value":"192.168.20.1 255.255.255.252"},
+                    {"index":2,"value":null},
+                    {"index":3,"value":null}
                 ]
             }
         ]
-}
+    },
+    {
+        "deviceName":"r2",
+        "access":"telnet",
+        "ip":"127.0.0.1",
+        "port":"5018",
+        "type":"router",
+        "configs":[
+            {
+                "index":0,
+                "params":[],
+                "all":true
+            },
+            {
+                "index":1,
+                "all":false,
+                "params":[
+                    {"index":0,"value":"r2"}
+                ]
+            },
+            {
+                "index":2,
+                "all":false,
+                "params":[
+                    {"index":0,"value":"gi0/0"},
+                    {"index":1,"value":"192.168.10.2 255.255.255.252"},
+                    {"index":2,"value":null},
+                    {"index":3,"value":null},
+                    {"index":0,"value":"gi0/2"},
+                    {"index":1,"value":"192.168.30.1 255.255.255.252"},
+                    {"index":2,"value":null},
+                    {"index":3,"value":null}
+                ]
+            }
+        ]
+    },
+    {
+        "deviceName":"r3",
+        "access":"telnet",
+        "ip":"127.0.0.1",
+        "port":"5020",
+        "type":"router",
+        "configs":[
+            {
+                "index":0,
+                "params":[],
+                "all":true
+            },
+            {
+                "index":1,
+                "all":false,
+                "params":[
+                    {"index":0,"value":"r3"}
+                ]
+            },
+            {
+                "index":2,
+                "all":false,
+                "params":[
+                    {"index":0,"value":"gi0/1"},
+                    {"index":1,"value":"192.168.20.2 255.255.255.252"},
+                    {"index":2,"value":null},
+                    {"index":3,"value":null},
+                    {"index":0,"value":"gi0/2"},
+                    {"index":1,"value":"192.168.30.2 255.255.255.252"},
+                    {"index":2,"value":null},
+                    {"index":3,"value":null}
+                ]
+            }
+        ]
+    }
+]
