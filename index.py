@@ -10,16 +10,17 @@ actions=json.load(actions)
 
 #interact with terminal
 def interact(child,action):
-    child.sendline(" ")
     if not len(action["expectList"]):
         action["expectList"]=[]
 
     action["expectList"].extend([middleMan.EOF,middleMan.TIMEOUT])
 
     if action["query"]:
-        child.send(action["query"])
+        print("CLI: %s " %(action["query"]))
+        child.sendline(action["query"])
     
     ret=child.expect(action["expectList"])
+    # print("before:%s after:%s" %(child.before,child.after))
     return {
         "passed":Boolean(ret not in [len(action["expectList"])-2,len(action["expectList"])-1]),
         "message":child.after if not action["read"] else child.before #child.after[2:len(child.after)-1]
@@ -40,7 +41,12 @@ def initPexpect(device):
         )
     expectList=["Router*","router",device["deviceName"]] if device["type"]=="router" else ["switch","switch",device["deviceName"]]
     childInstance.timeout=5
-    print(interact(childInstance,{"expectList":expectList}))
+    print("INSTANCE: %s IP: %s MODE: %s PORT:%s" 
+        %(
+           device["deviceName"],(device["ip"]or'127.0.0.1'),(device["access"]or'telnet'),(device["port"]or'23')
+        )
+    )
+    interact(childInstance,{"expectList":expectList,"query":" ","read":False})
     return childInstance
 
 def generateExpect(device,configProps):
@@ -56,17 +62,17 @@ def generateConfigs(deviceConfig,configList,device):
         for command in configList["commands"]:
             ret.append({
                 "query":command["base"],
-                "expectList":[device["deviceName"] if not command["expect"] else generateExpect(device,command["expect"])],
+                "expectList":['#',">",device["deviceName"] if not command["expect"] else generateExpect(device,command["expect"])],
                 "read":Boolean(command["read"] if command["read"] else False)
             })
     else:
         for param in deviceConfig["params"]:
             command=configList["commands"][param["index"]]
             ret.append({
-                "query":command["base"],
-                "expectList":[device["deviceName"] if not command["expect"] else generateExpect(device,command["expect"])],
+                "query":command["base"]+(param["value"] or " "),
+                "expectList":['#',">",device["deviceName"] if not command["expect"] else generateExpect(device,command["expect"])],
                 "read":Boolean(command["read"] if command["read"] else False)
-            })
+            })     
     return ret
 
 #intry
@@ -78,9 +84,11 @@ def iterator():
         for deviceConfigOption in device["configs"]:
             # create config for each device config property
             configs=actions["configs"][deviceConfigOption["index"]]
-            for config in generateConfigs(deviceConfigOption,configs,device):
-                interact(deviceShell,config)
-                # print(generateConfigs(deviceConfigOption,configs,device))
+            genConfigs=generateConfigs(deviceConfigOption,configs,device)
+            for config in genConfigs:
+                response=interact(deviceShell,config)
+                print("PASSED: %s" %(response["passed"]))
+            # print(generateConfigs(deviceConfigOption,configs,device))
 
 
 
